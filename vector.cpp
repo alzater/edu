@@ -15,6 +15,11 @@ public:
     ~vector();
 
 public:
+    T& operator[]( unsigned int size );
+    T* begin();
+    T* end();
+
+public:
     void reserve( unsigned int size );
     void resize( unsigned int size );
 
@@ -33,6 +38,24 @@ vector<T>::~vector()
 {
     if ( m_data )
         delete[] m_data;
+}
+
+template <typename T>
+T& vector<T>::operator[]( unsigned int size )
+{
+    return *(m_data + size);
+}
+
+template <typename T>
+T* vector<T>::begin()
+{
+    return m_data;
+}
+
+template <typename T>
+T* vector<T>::end()
+{
+    return m_data + m_size;
 }
 
 template <typename T>
@@ -79,5 +102,12 @@ int main()
     edu::vector<int> v;
     v.reserve(10);
     v.resize(5);
+    for ( int i = 0; i < 5; ++i )
+        v[i] = 5 - i;
+    
+    for ( int* iter = v.begin(); iter < v.end(); ++iter )
+    {
+        std::cout << *iter << ' ';
+    }
     std::cout << v.size();
 }
